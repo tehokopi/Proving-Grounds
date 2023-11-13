@@ -101,7 +101,7 @@ Nmap done: 1 IP address (1 host up) scanned in 111.00 seconds
 
 On port 8000 shows a webpage running on `WSGIServer 0.2`.
 
-![[Pasted image 20231110184502.png]]
+![Pasted image 20231112194914](https://github.com/tehokopi/Proving-Grounds/assets/150654583/2f93914e-9935-4446-913d-a62266086555)
 
 
 Trying some credentials such as admin:admin
